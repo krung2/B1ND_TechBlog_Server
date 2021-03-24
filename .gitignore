@@ -1,7 +1,9 @@
 package-lock.json
 yarn-lock.json
 
+.ormconfig.json
 .env
+.yarn.lock
 
 # compiled output
 /dist

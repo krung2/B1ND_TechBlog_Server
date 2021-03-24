@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import { DatabaseType } from 'typeorm';
 
 const getValue = (key: string): string => {
   const value = process.env[key];
@@ -13,3 +14,11 @@ const getValue = (key: string): string => {
 };
 
 export const PORT = getValue('PORT');
+
+export const DATABASE_CONFIG = {
+  host: getValue('DATABASE_HOST'),
+  port: parseInt(getValue('DATABASE_PORT')),
+  username: getValue('DATABASE_USERNAME'),
+  password: getValue('DATABASE_PASSWORD'),
+  database: getValue('DATABASE_NAME'),
+}
