@@ -25,29 +25,21 @@ export class AuthService {
 
   async login (loginDto: LoginDto): Promise<User> {
     
-    try {
+    const loginResult = await this.userRepository.findOne({
+      where: {
+        id: loginDto.id,
+      },
+    });
 
-      const loginResult = await this.userRepository.findOne({
-        where: {
-          id: loginDto.id,
-        },
-      });
-
-      if (loginResult === undefined) {
-        throw new UnauthorizedException('Id를 확인해주세요');
-      }
-
-      if (loginResult.pw === loginDto.pw) {
-        throw new UnauthorizedException('Pw를 확인해주세요');
-      }
-
-      return loginResult;
-
-    } catch (err) {
-
-      console.log(err);
-      throw new InternalServerErrorException('서버 오류');
+    if (loginResult === undefined) {
+      throw new UnauthorizedException('Id를 확인해주세요');
     }
+
+    if (loginResult.pw === loginDto.pw) {
+      throw new UnauthorizedException('Pw를 확인해주세요');
+    }
+
+    return loginResult;
   }
 
 
