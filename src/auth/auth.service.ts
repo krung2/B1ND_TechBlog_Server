@@ -1,8 +1,9 @@
 import { Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../entities/user.entity';
+import User from '../entities/user.entity';
 import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +13,7 @@ export class AuthService {
     private userRepository: Repository<User>,
   ) { }
 
-  async addUser (user: User) {
+  async addUser (user: RegisterDto) {
     try {
 
       await this.userRepository.save(user);

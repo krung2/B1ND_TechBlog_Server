@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { User } from '../entities/user.entity';
 import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -11,7 +11,7 @@ export class AuthController {
   ) {}
 
   @Post('register')
-  addUser(@Body() userData: User) {
+  addUser(@Body() userData: RegisterDto) {
     return this.authService.addUser(userData);
   }
 

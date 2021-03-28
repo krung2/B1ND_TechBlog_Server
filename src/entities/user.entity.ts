@@ -1,7 +1,8 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import Post from "./post.entity";
 
 @Entity('user')
-export class User {
+export default class User {
 
   @PrimaryColumn()
   id: string;
@@ -18,5 +19,8 @@ export class User {
   @CreateDateColumn({
     name: 'created_at',
   })
-  createdAt: string
+  createdAt: string;
+
+  @OneToMany(type => Post, post => post.user)
+  post: Post[];
 }
