@@ -1,4 +1,4 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty, IsOptional } from "class-validator";
 
 export class RegisterDto {
 
@@ -10,4 +10,13 @@ export class RegisterDto {
 
   @IsNotEmpty()
   name!: string;
+
+  @IsNotEmpty()
+  field!: string;
+
+  @IsNotEmpty()
+  permission!: string;
+
+  @IsOptional()
+  profileImage!: string;
 }

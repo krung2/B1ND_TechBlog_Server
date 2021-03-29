@@ -1,4 +1,5 @@
 import { Body, Controller, HttpCode, Post, Res } from '@nestjs/common';
+import returnLib from 'src/lib/return.lib';
 import * as tokenLib from 'src/lib/token.lib';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
@@ -25,13 +26,6 @@ export class AuthController {
 
     const token = await tokenLib.generateKey(user.id, user.name);
 
-    return {
-      status: 200,
-      message: '글 작성을 성공하였습니다.',
-      data: {
-        user,
-        token,
-      }
-    };
+    return returnLib(200, '로그인 성공', {user, token});
   }
 }

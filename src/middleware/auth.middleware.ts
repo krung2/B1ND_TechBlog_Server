@@ -9,7 +9,7 @@ import {
 import * as jwt from 'src/lib/token.lib';
 
 @Injectable()
-export default class AuthMiddleware implements CanActivate {
+export default class AuthGaurd implements CanActivate {
 
   public canActivate (context: ExecutionContext): boolean {
     
@@ -21,7 +21,7 @@ export default class AuthMiddleware implements CanActivate {
       throw new UnauthorizedException('토큰이 전송되지 않았습니다');
     }
 
-
+    request.user = this.validateToken(access_token);
 
     return true;
   }
