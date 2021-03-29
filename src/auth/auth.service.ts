@@ -59,7 +59,7 @@ export class AuthService {
       throw new UnauthorizedException('Id를 확인해주세요');
     }
 
-    if (loginResult.pw === loginDto.pw) {
+    if (loginResult.pw !== loginDto.pw) {
       throw new UnauthorizedException('Pw를 확인해주세요');
     }
 
