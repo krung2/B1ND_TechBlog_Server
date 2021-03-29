@@ -10,6 +10,7 @@ import { Repository } from 'typeorm';
 import User from '../entities/user.entity';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
+import { IRegister } from './interface/IRegister';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +22,7 @@ export class AuthService {
     private readonly keyRepository: Repository<UserKey>,
   ) { }
 
-  async addUser (registerDto: RegisterDto, userKey: string) {
+  async addUser (registerDto: IRegister, userKey: string) {
 
     const searchKey = await this.keyRepository.findOne({
       where: {
