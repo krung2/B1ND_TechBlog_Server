@@ -10,6 +10,20 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "incremental": true
+    "incremental": true,
+    "paths": {
+      "token/lib": [
+        "libs/lib/src"
+      ],
+      "token/lib/*": [
+        "libs/lib/src/*"
+      ],
+      "token/token": [
+        "libs/token/src"
+      ],
+      "token/token/*": [
+        "libs/token/src/*"
+      ]
+    }
   }
 }
