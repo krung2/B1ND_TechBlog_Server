@@ -1,5 +1,4 @@
 import 'dotenv/config';
-import { DatabaseType } from 'typeorm';
 
 const getValue = (key: string): string => {
   const value = process.env[key];
@@ -22,3 +21,5 @@ export const DATABASE_CONFIG = {
   password: getValue('DATABASE_PASSWORD'),
   database: getValue('DATABASE_NAME'),
 }
+
+export const JWT_SECRET = getValue('JWT_SECRET');

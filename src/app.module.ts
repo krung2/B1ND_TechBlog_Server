@@ -8,7 +8,7 @@ import { config } from './config/ormConfig';
   imports: [
     TypeOrmModule.forRoot(config()), 
     AuthModule, 
-    PostModule
+    PostModule,
   ],
 })
 export class AppModule {}

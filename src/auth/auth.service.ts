@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
+import { 
+  Injectable, 
+  InternalServerErrorException, 
+  UnauthorizedException 
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import User from '../entities/user.entity';
@@ -15,7 +19,6 @@ export class AuthService {
 
   async addUser (user: RegisterDto) {
     try {
-
       await this.userRepository.save(user);
     } catch (err) {
 
@@ -42,6 +45,5 @@ export class AuthService {
 
     return loginResult;
   }
-
 
 }
