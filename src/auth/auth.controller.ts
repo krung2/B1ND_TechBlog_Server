@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post, Res } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post, Query } from '@nestjs/common';
 import returnLib from 'src/lib/return.lib';
 import * as tokenLib from 'src/lib/token.lib';
 import { AuthService } from './auth.service';
@@ -13,8 +13,11 @@ export class AuthController {
   ) {}
 
   @Post('register')
-  addUser(@Body() userData: RegisterDto) {
-    return this.authService.addUser(userData);
+  addUser(
+    @Body() userData: RegisterDto,
+    @Query() userKey: any,
+    ) {
+    return this.authService.addUser(userData, userKey.userKey);
   }
 
   @Post('login')

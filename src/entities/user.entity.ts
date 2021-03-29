@@ -29,9 +29,6 @@ export default class User {
   @Column()
   field: string;
 
-  @RelationId((userKey: UserKey) => userKey.keyId)
-  userKeyId: string
-
   @Column({
     name: 'profile_image',
     type: 'varchar',
