@@ -53,15 +53,12 @@ export class AuthService {
     const loginResult = await this.userRepository.findOne({
       where: {
         id: loginDto.id,
+        pw: loginDto.pw,
       },
     });
 
     if (loginResult === undefined) {
-      throw new UnauthorizedException('Id를 확인해주세요');
-    }
-
-    if (loginResult.pw !== loginDto.pw) {
-      throw new UnauthorizedException('Pw를 확인해주세요');
+      throw new UnauthorizedException('Id혹은 비밀번호를 확인해주세요');
     }
 
     return loginResult;
