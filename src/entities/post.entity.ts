@@ -27,6 +27,12 @@ export default class Post {
   })
   content: string;
 
+  @Column({
+    name: 'description',
+    type: 'varchar',
+  })
+  description: string;
+
   @CreateDateColumn({
     name: 'created_at',
   })

@@ -14,6 +14,9 @@ export class RegisterDto {
   @IsNotEmpty()
   field!: string;
 
+  @IsNotEmpty()
+  userKey: string;
+
   @IsOptional()
   profileImage!: string;
 }

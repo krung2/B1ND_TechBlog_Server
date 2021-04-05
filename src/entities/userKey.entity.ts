@@ -11,6 +11,9 @@ export default class UserKey {
   keyId!: string;
 
   @Column()
+  name: string;
+
+  @Column()
   permission!: number;
 
   @CreateDateColumn({
