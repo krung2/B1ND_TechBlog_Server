@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Post from 'src/entities/post.entity';
 import User from 'src/entities/user.entity';
@@ -14,9 +14,19 @@ export class PostService {
   ) { }
 
   async addPost (addPostDto: AddPostDto, user: User) {
-    const createPost = this.postRepository.create(addPostDto);
 
-    createPost.user = user; 
+    try {
+      const createPost = this.postRepository.create(addPostDto);
+
+      createPost.user = user;
+
+      await this.postRepository.save(createPost);
+    } catch (err) {
+
+      // tslint:disable-next-line: no-console
+      console.log(err);
+      throw new InternalServerErrorException('서버 오류');
+    }
   }
 
 }

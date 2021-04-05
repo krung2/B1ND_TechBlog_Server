@@ -25,7 +25,7 @@ export class AuthService {
 
       if (userKey !== USER_KEY) {
 
-        throw new ForbiddenException('맞지 않은 키 입니다');
+        throw new ForbiddenException('알맞지 않은 키 입니다');
       }
     }
 

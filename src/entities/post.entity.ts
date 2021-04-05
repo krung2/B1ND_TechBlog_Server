@@ -1,18 +1,18 @@
-import { 
-  Column, 
-  CreateDateColumn, 
-  Entity, 
-  JoinColumn, 
-  ManyToOne, 
-  PrimaryColumn, 
-  RelationId 
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  RelationId
 } from "typeorm";
 import User from "./user.entity";
 
 @Entity('post')
 export default class Post {
-  
-  @PrimaryColumn()
+
+  @PrimaryGeneratedColumn()
   idx!: number;
 
   @RelationId((post: Post) => post.user)

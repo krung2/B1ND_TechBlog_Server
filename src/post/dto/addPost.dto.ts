@@ -7,4 +7,7 @@ export class AddPostDto {
 
   @IsNotEmpty()
   content: string;
+
+  @IsNotEmpty()
+  description: string;
 }

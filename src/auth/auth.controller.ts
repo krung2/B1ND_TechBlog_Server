@@ -15,7 +15,7 @@ export class AuthController {
   @Post('register')
   addUser(
     @Body() userDto: RegisterDto,
-    @Query() userKey?: string,
+    @Query('userKey') userKey?: string,
     ) {
     return this.authService.addUser(userDto, userKey);
   }
@@ -23,7 +23,7 @@ export class AuthController {
   @Post('login')
   @HttpCode(200)
   async login (
-    @Body() loginDto: LoginDto
+    @Body() loginDto: LoginDto,
   ) {
     const user = await this.authService.login(loginDto);
 
