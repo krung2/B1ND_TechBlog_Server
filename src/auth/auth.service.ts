@@ -5,12 +5,11 @@ import {
   UnauthorizedException 
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import UserKey from 'src/entities/userKey.entity';
+import { USER_KEY } from 'src/config/dotenv';
 import { Repository } from 'typeorm';
 import User from '../entities/user.entity';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
-import { IRegister } from './interface/IRegister';
 
 @Injectable()
 export class AuthService {
@@ -18,28 +17,24 @@ export class AuthService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    @InjectRepository(UserKey)
-    private readonly keyRepository: Repository<UserKey>,
   ) { }
 
-  async addUser (registerDto: IRegister, userKey: string) {
+  async addUser (registerDto: RegisterDto, userKey?: string) {
 
-    const searchKey = await this.keyRepository.findOne({
-      where: {
-        keyId: userKey,
-      },
-    });
-    
-    if (searchKey === undefined) {
-      throw new ForbiddenException('유효하지 않는 키 입니다');
+    if (userKey !== undefined) {
+
+      if (userKey !== USER_KEY) {
+
+        throw new ForbiddenException('맞지 않은 키 입니다');
+      }
     }
 
     try {
 
       const userData: User = this.userRepository.create(registerDto);
-      
-      userData.userKey = searchKey;
 
+      userData.userKey = userKey;
+      
       await this.userRepository.save(userData);
     } catch (err) {
 

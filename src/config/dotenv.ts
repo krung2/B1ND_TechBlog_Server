@@ -23,3 +23,5 @@ export const DATABASE_CONFIG = {
 }
 
 export const JWT_SECRET = getValue('JWT_SECRET');
+
+export const USER_KEY = getValue('USER_KEY');
