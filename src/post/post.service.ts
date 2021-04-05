@@ -29,4 +29,17 @@ export class PostService {
     }
   }
 
+  async getPosts (): Promise<Post[]> {
+
+    try {
+
+      return await this.postRepository.find();
+    } catch (err) {
+
+      // tslint:disable-next-line: no-console
+      console.log(err);
+      throw new InternalServerErrorException('서버 오류');
+    }
+  }
+
 }
