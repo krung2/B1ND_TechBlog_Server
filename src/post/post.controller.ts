@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -66,5 +67,16 @@ export class PostController {
     const data = await this.postService.getPost(idx);
 
     return returnLib(200, '불러오기 성공', data);
+  }
+
+  @Delete('/:idx')
+  @UseGuards(new AuthGaurd(1))
+  public async deletePostByIdx (
+    @Param('idx') idx: number,
+  ) {
+
+    const data = await this.postService.deletePostByIdx(idx);
+
+    return returnLib(200, '삭제하기 성공');
   }
 }

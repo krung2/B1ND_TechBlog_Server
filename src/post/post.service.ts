@@ -135,4 +135,19 @@ export class PostService {
       throw new InternalServerErrorException('서버 오류');
     }
   }
+
+  async deletePostByIdx (idx: number) {
+
+    try {
+
+      return this.postRepository.delete({
+        idx,
+      });
+    } catch (err) {
+
+      // tslint:disable-next-line: no-console
+      console.log(err);
+      throw new InternalServerErrorException('서버 오류');
+    }
+  }
 }
