@@ -27,7 +27,7 @@ export default class User {
 
   @Column({
     name: 'user_key',
-    select: false,
+    select: true,
   })
   userKey?: string;
 
@@ -39,7 +39,7 @@ export default class User {
   profileImage: string | null;
 
   @CreateDateColumn({
-    name: 'created_at', 
+    name: 'created_at',
   })
   createdAt: string;
 

@@ -6,8 +6,8 @@ import { config } from './config/ormConfig';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(config()), 
-    AuthModule, 
+    TypeOrmModule.forRoot(config()),
+    AuthModule,
     PostModule,
   ],
 })

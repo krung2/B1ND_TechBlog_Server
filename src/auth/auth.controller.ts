@@ -27,7 +27,7 @@ export class AuthController {
   ) {
     const user = await this.authService.login(loginDto);
 
-    const token = await tokenLib.generateKey(user.id, user.name);
+    const token = await tokenLib.generateKey(user.id, user.name, user.userKey);
 
     return returnLib(200, '로그인 성공', {user, token});
   }

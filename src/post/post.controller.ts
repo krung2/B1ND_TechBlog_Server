@@ -16,7 +16,7 @@ import { PostService } from './post.service';
 export class PostController {
 
   constructor (
-    private readonly postService: PostService,
+    private readonly postService: PostService
   ) { }
 
   @Post()
@@ -34,10 +34,14 @@ export class PostController {
     return this.postService.getPosts();
   }
 
-  @Get()
-  public async getPostsByuserId () {
+  // @Get()
+  // // tslint:disable-next-line: new-parens
+  // @UseGuards(new AuthGaurd)
+  // public async getPostsByuserId (
+  //   @Token() user: User,
+  // ) {
 
-  }
+  // }
 
   @Get('/:idx')
   public async getPost (
