@@ -33,11 +33,14 @@ export class PostController {
 
   @Get()
   public async getPosts () {
-    return this.postService.getPosts();
+
+    const data = await this.postService.getPosts();
+
+    return returnLib(200, '불러오기 성공', data);
   }
 
   @Get('/userSearch')
-  public async getPostsByuserId (
+  public async getPostsByUserId (
     @Query('userId') userId: string
   ) {
 
@@ -46,10 +49,22 @@ export class PostController {
     return returnLib(200, '불러오기 성공', data);
   }
 
+  @Get('/categorySearch')
+  public async getPostsByCategory (
+    @Query('category') category: string
+  ) {
+
+    const data = await this.postService.getPostsByCategory(category);
+
+    return returnLib(200, '불러오기 성공', data);
+  }
+
   @Get('/:idx')
   public async getPost (
     @Param('idx') idx: number,
   ) {
-    return this.postService.getPost(idx);
+    const data = await this.postService.getPost(idx);
+
+    return returnLib(200, '불러오기 성공', data);
   }
 }

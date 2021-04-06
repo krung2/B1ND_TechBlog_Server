@@ -35,11 +35,12 @@ export class PostService {
 
     try {
 
-      return await this.postRepository
-        .createQueryBuilder('post')
-        .leftJoinAndSelect('post.user', 'user')
-        .orderBy('post.idx', 'DESC')
-        .getMany()
+      return await this.postRepository.find({
+        relations: ['user'],
+        order: {
+          idx: 'DESC',
+        },
+      });
     } catch (err) {
 
       // tslint:disable-next-line: no-console
@@ -54,11 +55,15 @@ export class PostService {
 
     try {
 
-      post = await this.postRepository
-        .createQueryBuilder('post')
-        .leftJoinAndSelect('post.user', 'user')
-        .where('post.idx = idx', { idx: postIdx})
-        .getOne();
+      post = await this.postRepository.findOne({
+        relations: ['user'],
+        where: {
+          idx: postIdx,
+        },
+        order: {
+          idx: 'DESC',
+        },
+      });
 
     } catch (err) {
 
@@ -112,5 +117,22 @@ export class PostService {
     }
 
     return post;
+  }
+
+  async getPostsByCategory (category: string) {
+
+    try {
+
+      return this.postRepository.find({
+        where: {
+          category,
+        },
+      });
+    } catch ( err ) {
+
+      // tslint:disable-next-line: no-console
+      console.log(err);
+      throw new InternalServerErrorException('서버 오류');
+    }
   }
 }
