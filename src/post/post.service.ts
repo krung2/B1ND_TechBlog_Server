@@ -136,11 +136,40 @@ export class PostService {
     }
   }
 
-  async deletePostByIdx (idx: number) {
+  async modifyPostByIdx (user: User, idx: number, postDto: AddPostDto) {
+
+    const postData = await this.getPost(idx);
+
+    if (postData === undefined) {
+
+      throw new NotFoundException('잘못된 idx');
+    };
 
     try {
 
-      return this.postRepository.delete({
+      await this.postRepository.merge(postData, postDto);
+      return await this.postRepository.save(postData);
+    } catch ( err ) {
+
+      // tslint:disable-next-line: no-console
+      console.log(err);
+      throw new InternalServerErrorException('서버 오류');
+    }
+
+  }
+
+  async deletePostByIdx (idx: number) {
+
+    const postData = await this.getPost(idx);
+
+    if (postData === undefined) {
+
+      throw new NotFoundException('잘못된 idx');
+    }
+
+    try {
+
+      await this.postRepository.delete({
         idx,
       });
     } catch (err) {

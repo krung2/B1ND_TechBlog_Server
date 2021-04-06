@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Query,
   UseGuards
 } from '@nestjs/common';
@@ -69,14 +70,28 @@ export class PostController {
     return returnLib(200, '불러오기 성공', data);
   }
 
+  @Put('/:idx')
+  @UseGuards(new AuthGaurd(1))
+  public async modifyPostByIdx (
+    @Token() user: User,
+    @Param('idx') idx: number,
+    @Body() postDto: AddPostDto,
+  ) {
+
+    const data = await this.postService.modifyPostByIdx(user, idx, postDto);
+
+    return returnLib(200, '수정 성공', data);
+  }
+
   @Delete('/:idx')
   @UseGuards(new AuthGaurd(1))
   public async deletePostByIdx (
     @Param('idx') idx: number,
   ) {
 
-    const data = await this.postService.deletePostByIdx(idx);
+    await this.postService.deletePostByIdx(idx);
 
-    return returnLib(200, '삭제하기 성공');
+    return returnLib(200, '삭제 성공');
   }
+
 }
