@@ -3,12 +3,12 @@ import { MysqlConnectionOptions } from "typeorm/driver/mysql/MysqlConnectionOpti
 import { DATABASE_CONFIG } from "./dotenv";
 
 export const config= () => {
-  const config: MysqlConnectionOptions = {
+  const ORMconfig: MysqlConnectionOptions = {
     type: 'mysql',
     ...DATABASE_CONFIG,
-    entities: entities,
-    synchronize: false
+    entities,
+    synchronize: false,
   }
-  
-  return config;
+
+  return ORMconfig;
 }

@@ -1,22 +1,19 @@
-import { 
-  Column, 
-  CreateDateColumn, 
-  Entity, 
-  JoinColumn, 
-  ManyToOne, 
-  PrimaryColumn, 
-  RelationId 
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  RelationId,
 } from "typeorm";
 import User from "./user.entity";
 
 @Entity('post')
 export default class Post {
-  
-  @PrimaryColumn()
-  idx!: number;
 
-  @RelationId((post: Post) => post.user)
-  userId: string | null
+  @PrimaryGeneratedColumn()
+  idx!: number;
 
   @Column()
   title: string;
@@ -26,6 +23,17 @@ export default class Post {
     type: 'text',
   })
   content: string;
+
+  @Column({
+    name: 'description',
+    type: 'varchar',
+  })
+  description: string;
+
+  @Column({
+    nullable: true,
+  })
+  category: string;
 
   @CreateDateColumn({
     name: 'created_at',

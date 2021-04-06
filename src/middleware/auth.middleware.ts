@@ -1,18 +1,26 @@
 import {
-  CanActivate, 
-  ExecutionContext, 
-  GoneException, 
-  Injectable, 
-  InternalServerErrorException, 
-  UnauthorizedException 
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+  GoneException,
+  Injectable,
+  InternalServerErrorException,
+  UnauthorizedException
 } from '@nestjs/common';
+import { IToken } from 'src/lib/interface/IToken';
 import * as jwt from 'src/lib/token.lib';
 
 @Injectable()
 export default class AuthGaurd implements CanActivate {
 
-  public canActivate (context: ExecutionContext): boolean {
-    
+  private permission: number = 0;
+
+  constructor (permission?: number) {
+    this.permission = permission;
+  }
+
+  public async canActivate (context: ExecutionContext): Promise<boolean> {
+
     const request = context.switchToHttp().getRequest();
 
     const { access_token } = request.headers;
@@ -21,27 +29,31 @@ export default class AuthGaurd implements CanActivate {
       throw new UnauthorizedException('토큰이 전송되지 않았습니다');
     }
 
-    request.user = this.validateToken(access_token);
+    const validatedToken: IToken = await this.validateToken(access_token);
+
+    if (this.permission !== 0 && validatedToken.permission === undefined) {
+      throw new ForbiddenException('권한이 없습니다');
+    }
+
+    request.user = validatedToken;
 
     return true;
   }
 
-  private validateToken (token: string): string {
+  private async validateToken (token: string): Promise<IToken> {
     try {
 
-      const verify: string = jwt.verifyKey(token) as string;
-
-      return verify;
+      return await jwt.verifyKey(token) as IToken;
     } catch (error) {
       switch (error.message) {
         case 'INVALID_TOKEN':
         case 'TOKEN_IS_ARRAY':
         case 'NO_USER':
           throw new UnauthorizedException('유효하지 않은 토큰입니다');
-        
+
         case 'EXPIRED_TOKEN':
           throw new GoneException('토큰이 만료되었습니다.');
-        
+
         default:
           throw new InternalServerErrorException('서버 오류');
       }

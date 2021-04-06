@@ -14,20 +14,20 @@ export class AuthController {
 
   @Post('register')
   addUser(
-    @Body() userData: RegisterDto,
-    @Query() userKey: any,
+    @Body() userDto: RegisterDto,
+    @Query('userKey') userKey?: string,
     ) {
-    return this.authService.addUser(userData, userKey.userKey);
+      return this.authService.addUser(userDto, userKey);
   }
 
   @Post('login')
   @HttpCode(200)
   async login (
-    @Body() loginDto: LoginDto
+    @Body() loginDto: LoginDto,
   ) {
     const user = await this.authService.login(loginDto);
 
-    const token = await tokenLib.generateKey(user.id, user.name);
+    const token = await tokenLib.generateKey(user.id, user.name, user.userKey);
 
     return returnLib(200, '로그인 성공', {user, token});
   }
