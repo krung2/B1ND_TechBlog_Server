@@ -1,4 +1,4 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty, IsOptional } from "class-validator";
 
 export class AddPostDto {
 
@@ -10,4 +10,7 @@ export class AddPostDto {
 
   @IsNotEmpty()
   description: string;
+
+  @IsOptional()
+  category: string;
 }

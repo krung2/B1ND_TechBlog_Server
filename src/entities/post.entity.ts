@@ -5,7 +5,7 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
-  RelationId
+  RelationId,
 } from "typeorm";
 import User from "./user.entity";
 
@@ -29,6 +29,11 @@ export default class Post {
     type: 'varchar',
   })
   description: string;
+
+  @Column({
+    nullable: true,
+  })
+  category: string;
 
   @CreateDateColumn({
     name: 'created_at',
