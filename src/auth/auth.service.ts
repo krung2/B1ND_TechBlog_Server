@@ -73,4 +73,42 @@ export class AuthService {
     return loginResult;
   }
 
+  private async findUserByid (id: string) {
+
+    try {
+
+      return this.userRepository.findOne({
+        where: {
+          id,
+        },
+      });
+    } catch (err) {
+
+      // tslint:disable-next-line: no-console
+      console.log(err);
+      throw new InternalServerErrorException('서버 오류');
+    }
+  }
+
+  async modifyProfile (id: string, profileImage: string): Promise<User> {
+
+    const userData = await this.findUserByid(id);
+
+    if (userData === undefined) {
+      throw new UnauthorizedException('없는 유저입니다');
+    }
+
+    userData.profileImage = profileImage;
+
+    try {
+
+      return this.userRepository.save(userData);
+    } catch (err) {
+
+      // tslint:disable-next-line: no-console
+      console.log(err);
+      throw new InternalServerErrorException('서버 오류');
+    }
+  }
+
 }

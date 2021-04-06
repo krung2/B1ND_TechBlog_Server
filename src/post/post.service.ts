@@ -15,7 +15,7 @@ export class PostService {
     private userRepository: Repository<User>,
   ) { }
 
-  async addPost (addPostDto: AddPostDto, user: User) {
+  async addPost (addPostDto: AddPostDto, user: User): Promise<void> {
 
     try {
       const createPost = this.postRepository.create(addPostDto);
@@ -79,7 +79,7 @@ export class PostService {
     return post;
   }
 
-  async getPostByuserId (userId: string) {
+  async getPostByuserId (userId: string): Promise<Post[]> {
 
     let post: Post[];
     let userData: User | undefined
@@ -136,7 +136,7 @@ export class PostService {
     }
   }
 
-  async modifyPostByIdx (user: User, idx: number, postDto: AddPostDto) {
+  async modifyPostByIdx (user: User, idx: number, postDto: AddPostDto): Promise<Post> {
 
     const postData = await this.getPost(idx);
 
@@ -148,6 +148,9 @@ export class PostService {
     try {
 
       await this.postRepository.merge(postData, postDto);
+
+      postData.user = user;
+
       return await this.postRepository.save(postData);
     } catch ( err ) {
 
@@ -158,7 +161,7 @@ export class PostService {
 
   }
 
-  async deletePostByIdx (idx: number) {
+  async deletePostByIdx (idx: number): Promise<void> {
 
     const postData = await this.getPost(idx);
 
