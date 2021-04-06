@@ -17,7 +17,7 @@ export class AuthController {
     @Body() userDto: RegisterDto,
     @Query('userKey') userKey?: string,
     ) {
-    return this.authService.addUser(userDto, userKey);
+      return this.authService.addUser(userDto, userKey);
   }
 
   @Post('login')

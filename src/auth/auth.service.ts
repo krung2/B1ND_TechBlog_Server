@@ -57,6 +57,19 @@ export class AuthService {
       throw new UnauthorizedException('Id혹은 비밀번호를 확인해주세요');
     }
 
+    const permissionSearch = await this.userRepository.findOne({
+      where: {
+        id: loginDto.id,
+        pw: loginDto.pw,
+        userKey: USER_KEY,
+      },
+    });
+
+    if (permissionSearch !== undefined) {
+
+      loginResult.userKey = "1";
+    }
+
     return loginResult;
   }
 

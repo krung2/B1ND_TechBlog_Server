@@ -21,7 +21,7 @@ export class PostController {
 
   @Post()
   // tslint:disable-next-line: new-parens
-  @UseGuards(new AuthGaurd)
+  @UseGuards(new AuthGaurd(1))
   public async addPost (
     @Token() user: User,
     @Body() addPostDto: AddPostDto,

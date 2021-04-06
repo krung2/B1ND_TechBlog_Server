@@ -27,7 +27,8 @@ export default class User {
 
   @Column({
     name: 'user_key',
-    select: true,
+    select: false,
+    nullable: true,
   })
   userKey?: string;
 

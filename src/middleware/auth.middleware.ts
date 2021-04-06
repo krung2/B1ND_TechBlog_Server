@@ -30,8 +30,8 @@ export default class AuthGaurd implements CanActivate {
 
     const validatedToken: IToken = await this.validateToken(access_token);
 
-    if (this.permission >= validatedToken.permission) {
-      throw new UnauthorizedException('권한 없음');
+    if (this.permission !== 0 && validatedToken.permission === undefined) {
+      throw new UnauthorizedException('권한이 없습니다');
     }
 
     request.user = validatedToken;
