@@ -18,8 +18,12 @@ export class AuthController {
   @Post('register')
   addUser(
     @Body() userDto: RegisterDto,
-    @Query('userKey') userKey?: string,
     ) {
+
+      const { userKey } = userDto;
+
+      delete userDto.userKey;
+
       return this.authService.addUser(userDto, userKey);
   }
 

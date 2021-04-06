@@ -16,4 +16,7 @@ export class RegisterDto {
 
   @IsOptional()
   profileImage!: string;
+
+  @IsOptional()
+  userKey: string;
 }
