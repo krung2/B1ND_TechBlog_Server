@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Post from 'src/entities/post.entity';
 import User from 'src/entities/user.entity';
@@ -33,7 +33,11 @@ export class PostService {
 
     try {
 
-      return await this.postRepository.find();
+      return await this.postRepository.find({
+        order: {
+          idx: 'DESC',
+        },
+      });
     } catch (err) {
 
       // tslint:disable-next-line: no-console
@@ -42,4 +46,25 @@ export class PostService {
     }
   }
 
+  async getPost (postIdx: number): Promise<Post> {
+
+    let post: Post;
+
+    try {
+      post = await this.postRepository.findOne({
+        idx: postIdx,
+      });
+    } catch (err) {
+
+      // tslint:disable-next-line: no-console
+      console.log(err);
+      throw new InternalServerErrorException('서버 오류');
+    }
+
+    if (post === undefined) {
+      throw new NotFoundException('없는 idx입니다');
+    }
+
+    return post;
+  }
 }

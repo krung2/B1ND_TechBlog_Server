@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   UseGuards
 } from '@nestjs/common';
@@ -31,5 +32,12 @@ export class PostController {
   @Get()
   public async getPosts () {
     return this.postService.getPosts();
+  }
+
+  @Get('/:idx')
+  public async getPost (
+    @Param('idx') idx: number,
+  ) {
+    return this.postService.getPost(idx);
   }
 }

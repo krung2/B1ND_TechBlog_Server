@@ -1,8 +1,8 @@
-import { 
+import {
   ForbiddenException,
-  Injectable, 
-  InternalServerErrorException, 
-  UnauthorizedException 
+  Injectable,
+  InternalServerErrorException,
+  UnauthorizedException
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { USER_KEY } from 'src/config/dotenv';
@@ -34,17 +34,18 @@ export class AuthService {
       const userData: User = this.userRepository.create(registerDto);
 
       userData.userKey = userKey;
-      
+
       await this.userRepository.save(userData);
     } catch (err) {
 
+      // tslint:disable-next-line: no-console
       console.log(err);
       throw new InternalServerErrorException('서버 오류');
     }
   }
 
   async login (loginDto: LoginDto): Promise<User> {
-    
+
     const loginResult = await this.userRepository.findOne({
       where: {
         id: loginDto.id,
