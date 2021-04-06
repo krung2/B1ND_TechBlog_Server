@@ -33,11 +33,11 @@ export class PostService {
 
     try {
 
-      return await this.postRepository.find({
-        order: {
-          idx: 'DESC',
-        },
-      });
+      return await this.postRepository
+        .createQueryBuilder('post')
+        .leftJoinAndSelect('post.user', 'user')
+        .orderBy('post.idx', 'DESC')
+        .getMany()
     } catch (err) {
 
       // tslint:disable-next-line: no-console
@@ -51,9 +51,13 @@ export class PostService {
     let post: Post;
 
     try {
-      post = await this.postRepository.findOne({
-        idx: postIdx,
-      });
+
+      post = await this.postRepository
+        .createQueryBuilder('post')
+        .leftJoinAndSelect('post.user', 'user')
+        .where('post.idx = idx', { idx: postIdx})
+        .getOne();
+
     } catch (err) {
 
       // tslint:disable-next-line: no-console

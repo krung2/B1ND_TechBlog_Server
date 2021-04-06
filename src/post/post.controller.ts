@@ -34,6 +34,11 @@ export class PostController {
     return this.postService.getPosts();
   }
 
+  @Get()
+  public async getPostsByuserId () {
+
+  }
+
   @Get('/:idx')
   public async getPost (
     @Param('idx') idx: number,

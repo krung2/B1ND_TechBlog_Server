@@ -15,9 +15,6 @@ export default class Post {
   @PrimaryGeneratedColumn()
   idx!: number;
 
-  @RelationId((post: Post) => post.user)
-  userId: string | null
-
   @Column()
   title: string;
 

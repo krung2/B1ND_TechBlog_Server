@@ -1,9 +1,9 @@
-import { 
-  Column, 
-  CreateDateColumn, 
-  Entity, 
-  OneToMany, 
-  PrimaryColumn, 
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryColumn,
 } from "typeorm";
 import Post from "./post.entity";
 
@@ -21,11 +21,14 @@ export default class User {
 
   @Column()
   name: string;
- 
+
   @Column()
   field: string;
 
-  @Column()
+  @Column({
+    name: 'user_key',
+    select: false,
+  })
   userKey?: string;
 
   @Column({
@@ -34,9 +37,9 @@ export default class User {
     nullable: true,
   })
   profileImage: string | null;
-   
+
   @CreateDateColumn({
-    name: 'created_at',
+    name: 'created_at', 
   })
   createdAt: string;
 
