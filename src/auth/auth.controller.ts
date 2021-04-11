@@ -5,7 +5,9 @@ import returnLib from 'src/lib/return.lib';
 import * as tokenLib from 'src/lib/token.lib';
 import AuthGaurd from 'src/middleware/auth.middleware';
 import { AuthService } from './auth.service';
+import * as jwt from '../lib/token.lib';
 import { LoginDto } from './dto/login.dto';
+import { PermissionDto } from './dto/permission.dta';
 import { RegisterDto } from './dto/register.dto';
 
 @Controller('auth')
@@ -26,6 +28,18 @@ export class AuthController {
       const data = await this.authService.addUser(userDto, userKey);
 
       return returnLib(200, '회원가입 성공', {data});
+  }
+
+  @Post('/permission')
+  async adminCheck (
+    @Body() permissionDto: PermissionDto,
+  ) {
+
+    const { token } = permissionDto;
+
+    const decoded = await jwt.verifyKey(token);
+
+    return returnLib(200, '권환 확인', {decoded});
   }
 
   @Post('login')
