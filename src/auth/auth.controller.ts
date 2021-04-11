@@ -16,15 +16,16 @@ export class AuthController {
   ) {}
 
   @Post('register')
-  addUser(
+  async addUser(
     @Body() userDto: RegisterDto,
     ) {
 
       const { userKey } = userDto;
-
       delete userDto.userKey;
 
-      return this.authService.addUser(userDto, userKey);
+      const data = await this.authService.addUser(userDto, userKey);
+
+      return returnLib(200, '회원가입 성공', {data});
   }
 
   @Post('login')
