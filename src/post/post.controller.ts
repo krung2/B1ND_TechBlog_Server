@@ -30,7 +30,10 @@ export class PostController {
     @Token() user: User,
     @Body() addPostDto: AddPostDto,
   ) {
-    return this.postService.addPost(addPostDto, user);
+
+    await this.postService.addPost(addPostDto, user);
+
+    return returnLib(200, '게시 성공!');
   }
 
   @Get()
