@@ -5,7 +5,7 @@ import { JWT_SECRET } from 'src/config/dotenv';
 
 export const generateKey = (id: string, name: string, userKey?: string): string => {
 
-  let permission: number;
+  let permission: number = 0;
 
   if ( userKey !== undefined) {
 

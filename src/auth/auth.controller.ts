@@ -39,7 +39,7 @@ export class AuthController {
 
     const decoded = await jwt.verifyKey(token);
 
-    return returnLib(200, '권환 확인', {decoded});
+    return returnLib(200, '권환 확인', decoded);
   }
 
   @Post('login')
